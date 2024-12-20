@@ -9,7 +9,6 @@ const SearchBar = () => {
 
     const handleSearch = async () => {
         if (!query) return;
-        
         setIsLoading(true);
 
         try {
