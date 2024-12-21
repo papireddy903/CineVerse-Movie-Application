@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
+import { FaRegUserCircle } from "react-icons/fa";
+
+
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
@@ -57,30 +60,30 @@ const Navbar = () => {
   };
 
   return (
-    <div className="absolute right-4 m-5 px-5 w-full flex justify-between items-center">
-      {user && (
-        <div className="flex w-full justify-between items-center">
-          <Link to="/" className="text-gray-400 hover:text-white mx-10">
-            Home
-          </Link>
-          <div className="flex gap-5">
-            <button
-              onClick={handleFavorite}
-              className="text-gray-400 hover:text-white"
-            >
-              My Favorites
-            </button>
-            <button
-              onClick={handleLogout}
-              className="text-gray-400 hover:text-white"
-            >
-              Logout
-            </button>
+      <div className="fixed top-0 left-0 w-full bg-gray-900 text-white h-16 px-5 flex justify-between items-center z-50">
+        {user && (
+          <div className="flex w-full justify-between items-center">
+            <Link to="/" className="text-gray-400 hover:text-white mx-10">
+              Home
+            </Link>
+            <div className="flex gap-4 items-center">
+              <Link to="/profile" className="text-gray-400 hover:text-white">
+                <FaRegUserCircle />
+              </Link>
+              <Link to={`/favorites`} className="text-gray-400 hover:text-white">
+                My Favorites
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-gray-400 hover:text-white"
+              >
+                Logout
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
+        )}
+      </div>
+    );
+  };
+  
 export default Navbar;

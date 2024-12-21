@@ -3,5 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gradient-to-br from-gray-900 to-gray-800;
+  @apply bg-gradient-to-br from-gray-900 to-gray-800 h-screen w-screen;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
 }

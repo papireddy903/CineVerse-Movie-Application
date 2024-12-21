@@ -10,7 +10,6 @@ const SearchBar = () => {
 
     const years = Array.from({ length: 2025 - 1900 }, (_, i) => 1900 + i);
     const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
-    console.log(API_KEY);
 
     const handleSearch = async () => {
         if (!query) return;

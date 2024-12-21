@@ -1,33 +1,47 @@
-import React from 'react'
-import SearchBar from './components/SearchBar'
-import MovieDetails from './components/MovieDetails'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { SearchProvider } from "./components/SearchContext";
 import Navbar from './components/Navbar';
+import SearchBar from './components/SearchBar';
+import MovieDetails from './components/MovieDetails';
 import NotFound from './pages/NotFound';
-import SignIn from './pages/SignIn'
-import SignUp from './pages/SignUp'
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
 import Favorites from './components/Favorites';
-import { auth, db } from './firebase';
-
-
+import UserProfile from './pages/UserProfile';
 
 const App = () => {
   return (
     <SearchProvider>
-    <Router>
-      <Navbar/>
-      <Routes>
-        <Route path="/" element={<SignIn/>}/>
-        <Route path="/register" element={<SignUp/>}/>
-        <Route path="/search" element={<SearchBar/>}/>
-        <Route path="/movie/:id" element={<MovieDetails/>}/>
-        <Route path="/favorites" element={<Favorites/>}/>
-        <Route path="*" element={<NotFound />}/>
-      </Routes>
-    </Router>
+      <Router>
+        <AppRoutes />
+      </Router>
     </SearchProvider>
-  )
-}
+  );
+};
 
-export default App
+const AppRoutes = () => {
+  const location = useLocation();
+
+  const hideNavbarRoutes = ['/', '/signup'];
+
+  const hideNavbar = hideNavbarRoutes.includes(location.pathname);
+
+  return (
+    <div className={!hideNavbar ? "pt-16" : ""}>
+      {!hideNavbar && <Navbar />}
+
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/search" element={<SearchBar />} />
+        <Route path="/movie/:id" element={<MovieDetails />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
+  );
+};
+
+export default App;
