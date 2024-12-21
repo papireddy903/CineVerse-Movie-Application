@@ -5,7 +5,7 @@ import { CiHeart } from "react-icons/ci";
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { getAuth } from "firebase/auth";
 import { collection, getDoc, doc, setDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
-import { db } from '../firebase'; // Adjust the path according to your setup
+import { db } from '../firebase'; 
 
 const MovieDetails = () => {
     const { id } = useParams();
@@ -35,7 +35,7 @@ const MovieDetails = () => {
         fetchMovieDetails();
     }, [id]);
 
-    // Check if the movie is already in the user's favorites
+    // Checking if the movie is already in the user's favorites
     const checkIfFavorite = async () => {
         if (auth.currentUser) {
             const userRef = doc(db, 'users', auth.currentUser.uid);
@@ -84,7 +84,7 @@ const MovieDetails = () => {
                     favorites: [movie.imdbID]
                 });
 
-                setIsFavorite(true); // Set as favorite after adding it
+                setIsFavorite(true); 
                 console.log('Set isFavorite to true');
             }
         }

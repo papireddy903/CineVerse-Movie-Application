@@ -1,70 +1,105 @@
-# Getting Started with Create React App
+# Movie Application Using OMDb API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+The **Movie App** is a web application that allows users to search for movies, view detailed information about them, and manage a list of their favorite movies. It leverages the OMDb API to fetch movie data and provides a user-friendly interface for exploring movies by title, year, and other details.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Search for Movies by Title**: Easily search for movies by entering the title in the search bar.
+- **Narrow Down Search Results with Year**: Filter movie listings by year to refine your search results.
+- **View Detailed Movie Information**: Get comprehensive details about movies including box office collections, ratings, plot summaries, and more.
+- **Add/Remove Movies to/from Favorites**: Users can save their favorite movies to their list for easy access later.
+- **Responsive Design**: The app is designed to work seamlessly on both mobile and desktop devices for an optimal user experience.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Technologies Used
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Frontend**: React.js
+- **API**: OMDb API
+- **Libraries**:
+  - Axios (for making API requests)
+  - React Router (for routing)
+  - Firebase (for user authentication and storing favorite movies)
+  - Tailwind CSS (for styling)
+  - React Icons (for icons like heart and star)
 
-### `npm test`
+## Setup and Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
 
-### `npm run build`
+Ensure the following are installed on your machine:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Node.js** (includes npm) — [Install Node.js](https://nodejs.org/)
+- **Firebase account** — [Get started with Firebase](https://firebase.google.com/)
+- **API Key** from OMDb API — [Get OMDb API Key](https://www.omdbapi.com/apikey.aspx)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Steps to Run the Application Locally
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Clone the Repository**  
+   Clone the project to your local machine using:
+   ```bash
+   git clone https://github.com/papireddy903/Movie-Application-Using-OMDb-API.git
+   ```
+2. **Navigate to the Project Directory**  
+   Change into the project directory:
+   ```bash
+   cd Movie-Application-Using-OMDb-API
+   ```
+3. **Install Dependencies**
+    Install necessary dependencies
+    ```bash
+    npm install
+    ```
+4. **Setup Firebase**
+    * Create a Firebase project and enable Firebase Authentication.
+    * Obtain the Firebase configuration details from the Firebase console.
+    * In the src/firebase.js file, add your Firebase config data:
+    ```bash
+    import { initializeApp } from "firebase/app";
+    import { getAuth } from "firebase/auth";
+    import { getFirestore } from "firebase/firestore";
 
-### `npm run eject`
+    const firebaseConfig = {
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: `${process.env.REACT_APP_PROJECT_ID}.appspot.com`, 
+    messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+    };
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    export { auth, db };
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+5. **Obtain OMDb API KEY**
+    * Obtain APIKEY from [here](https://www.omdbapi.com/apikey.aspx)
+    * Once you have your key, add it to the .env file in the root of your project:
+    ```bash
+    REACT_APP_OMDB_API_KEY=your-omdb-api-key
+    ```
+    * Ensure that the .env file is added to your .gitignore to prevent exposing sensitive information.
 
-## Learn More
+6. **Run the Application**
+    Start the app with 
+    ```bash
+    npm start
+    ```
+    This will launch the application on http://localhost:3000 in your browser.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

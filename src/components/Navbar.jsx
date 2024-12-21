@@ -60,12 +60,9 @@ const Navbar = () => {
     <div className="absolute right-4 m-5 px-5 w-full flex justify-between items-center">
       {user && (
         <div className="flex w-full justify-between items-center">
-          {/* Home link aligned to the left */}
           <Link to="/" className="text-gray-400 hover:text-white mx-10">
             Home
           </Link>
-
-          {/* Right side buttons */}
           <div className="flex gap-5">
             <button
               onClick={handleFavorite}

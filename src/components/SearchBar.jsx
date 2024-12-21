@@ -38,7 +38,6 @@ const SearchBar = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-4">
             <div className="flex items-center w-full max-w-2xl space-x-4">
-                {/* Search Bar */}
                 <div className="relative flex-1">
                     <input
                         type="text"
@@ -50,7 +49,6 @@ const SearchBar = () => {
                     />
                 </div>
 
-                {/* Year Dropdown */}
                 <select
                     value={year}
                     onChange={(e) => setYear(e.target.value)}
@@ -62,7 +60,6 @@ const SearchBar = () => {
                     ))}
                 </select>
 
-                {/* Search Button */}
                 <button
                     onClick={handleSearch}
                     className="text-xl p-4 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-all duration-300 shadow-lg"
@@ -71,12 +68,10 @@ const SearchBar = () => {
                 </button>
             </div>
 
-            {/* Loading Indicator */}
             {isLoading && (
                 <div className="mt-8 text-white text-xl">Loading...</div>
             )}
 
-            {/* Movies Display */}
             {!isLoading && searchInitiated && movies.length > 0 && (
                 <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {movies.map((movie) => (
@@ -103,7 +98,6 @@ const SearchBar = () => {
                 </div>
             )}
 
-            {/* Error Display */}
             {!isLoading && searchInitiated && movies.length === 0 && (
                 <div className="mt-8 text-white text-xl">No movies found.</div>
             )}
