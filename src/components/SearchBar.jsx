@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from "axios";
+import { useSearch } from "./SearchContext";
+
 
 const SearchBar = () => {
-    const [query, setQuery] = useState("");
-    const [year, setYear] = useState(""); // State for dropdown year selection
-    const [movies, setMovies] = useState([]);
+    const { query, setQuery, year, setYear, movies, setMovies } = useSearch();
     const [isLoading, setIsLoading] = useState(false);
 
     // Generate years for the dropdown dynamically (1900 - 2024)
     const years = Array.from({ length: 2025 - 1900 }, (_, i) => 1900 + i);
+    const API_KEY = process.env.REACT_APP_OMDB_API_KEY
+    console.log(API_KEY)
 
     const handleSearch = async () => {
         if (!query) return;
@@ -17,8 +19,8 @@ const SearchBar = () => {
         setIsLoading(true);
 
         try {
-            const yearParam = year!=='Year' ? `&y=${year}` : "";
-            const response = await axios.get(`https://www.omdbapi.com/?s=${query}${yearParam}&apikey=a89f1437`);
+            const yearParam = year && year !== "Year" ? `&y=${year}` : "";
+            const response = await axios.get(`https://www.omdbapi.com/?s=${query}${yearParam}&apikey=${API_KEY}`);
             const data = response.data;
 
             if (data.Response === "True") {
