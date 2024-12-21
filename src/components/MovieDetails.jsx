@@ -243,18 +243,30 @@ const MovieDetails = () => {
       </div>
 
       {showTrailer && trailerId && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50">
-          <div className="bg-gray-800 rounded-lg p-4">
-            <Youtube videoId={trailerId} className="w-full h-64" />
-            <button
-              onClick={() => setShowTrailer(false)}
-              className="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+  <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50 p-6">
+    <div className="bg-gray-800 rounded-lg p-4 w-full max-w-4xl mx-auto">
+      <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
+        <Youtube 
+          videoId={trailerId}
+          className="absolute top-0 left-0 w-full h-full rounded"
+          opts={{
+            width: '100%',
+            height: '100%',
+            playerVars: {
+              autoplay: 1,
+            },
+          }}
+        />
+      </div>
+      <button
+        onClick={() => setShowTrailer(false)}
+        className="mt-4 bg-red-600 hover:bg-red-700 text-white w-full py-2 rounded text-sm font-medium"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
     </div>
   );
 };
