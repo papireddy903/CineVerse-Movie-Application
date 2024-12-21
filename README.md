@@ -1,6 +1,33 @@
 # Movie Application Using OMDb API
 
-## Overview
+# Table of Contents
+- [Preview](#preview)
+- [Introduction](#introduction)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Setup and Installation](#setup-and-installation)
+  - [Prerequisites](#prerequisites)
+  - [Steps to Run the Application Locally](#steps-to-run-the-application-locally)
+
+- [Data sources and Assumptions](#sources-and-assumptions)
+- [Contributing](#contributing)
+- [License](#license)  
+- [Acknowledgments](#acknowledgments)
+- [Contact](#contact)
+
+## Preview
+![Login Page](image.png)
+![Signup Page](image-1.png)
+![Home Page](image-2.png)
+![Movies Search](image-3.png)
+![Movie Details](image-4.png)
+![Favorite Movies/Shows](image-5.png)
+![Responsive](image-6.png)
+![Responsive](image-7.png)
+
+
+
+## Introduction
 
 The **Movie App** is a web application that allows users to search for movies, view detailed information about them, and manage a list of their favorite movies. It leverages the OMDb API to fetch movie data and provides a user-friendly interface for exploring movies by title, year, and other details.
 
@@ -53,37 +80,26 @@ Ensure the following are installed on your machine:
 4. **Setup Firebase**
     * Create a Firebase project and enable Firebase Authentication.
     * Obtain the Firebase configuration details from the Firebase console.
-    * In the src/firebase.js file, add your Firebase config data:
+    * Refer to the [Firebase Web Setup documentation](https://firebase.google.com/docs/auth/web/start?hl=en&authuser=0) for more details on setting up Firebase Authentication in your web app.
+    * Once you have your configuration details, add it to the .env file.
+
     ```bash
-    import { initializeApp } from "firebase/app";
-    import { getAuth } from "firebase/auth";
-    import { getFirestore } from "firebase/firestore";
-
-    const firebaseConfig = {
-    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: `${process.env.REACT_APP_PROJECT_ID}.appspot.com`, 
-    messagingSenderId: process.env.REACT_APP_MESSAGE_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID,
-    measurementId: process.env.REACT_APP_MEASUREMENT_ID,
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    export { auth, db };
-
-```
+        REACT_APP_FIREBASE_API_KEY="your-firebase-api-key"
+        REACT_APP_AUTH_DOMAIN="your-auth-domain"
+        REACT_APP_PROJECT_ID="your-project-id"
+        REACT_APP_STORAGE_BUCKET="your-storage-bucket"
+        REACT_APP_MESSAGING_SENDER_ID="your-sender-id"
+        REACT_APP_APP_ID="your-app-id"
+        REACT_APP_MEASUREMENT_ID="your-measurement-id"
+    ```
 
 5. **Obtain OMDb API KEY**
-    * Obtain APIKEY from [here](https://www.omdbapi.com/apikey.aspx)
-    * Once you have your key, add it to the .env file in the root of your project:
+    - Obtain APIKEY from [here](https://www.omdbapi.com/apikey.aspx)
+    Once you have your key, add it to the .env file in the root of your project:
     ```bash
-    REACT_APP_OMDB_API_KEY=your-omdb-api-key
+    REACT_APP_OMDB_API_KEY="your-omdb-api-key"
     ```
-    * Ensure that the .env file is added to your .gitignore to prevent exposing sensitive information.
+- Ensure that the .env file is added to your .gitignore to prevent exposing sensitive information.
 
 6. **Run the Application**
     Start the app with 
@@ -92,9 +108,36 @@ Ensure the following are installed on your machine:
     ```
     This will launch the application on http://localhost:3000 in your browser.
 
+## Data sources and Assumptions
+   - The app uses the OMDb API to fetch movie data.
+   - The app assumes that the OMDb API provides accurate and up-to-date movie information.      
+   - The app uses Firebase for user authentication and storing favorite movies.
+   - The app uses Tailwind CSS for styling.
+   - The app uses React Icons for icons like heart and star.
+   - It is assumed that the data fetched from the OMDb API is accurate and up-to-date, as the application relies on this data for displaying movie information.
+   - The application assumes that users will have a stable internet connection to interact with the OMDb API for movie data and Firebase for authentication and storage.
+   - The application assumes that users will access it using modern web browsers that support the technologies used (e.g., React, Tailwind CSS).
+   - It is assumed that the environment variables in the .env file are correctly configured for the application to function properly.
+## Contributing
+Contributions are welcome! If you have a feature or bug fix you'd like to contribute, please follow the steps below.
+   - Fork the repository
+   - Create a feature branch
+   - Commit your changes
+   - Push to the branch
+   - Open a pull request    
 
+## License
+   This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
 
+## Acknowledgments
+   - [React Router](https://reactrouter.com/)
+   - [Firebase](https://firebase.google.com/)
+   - [Tailwind CSS](https://tailwindcss.com/)
+   - [React Icons](https://react-icons.github.io/react-icons/)
+   - [OMDb API](https://www.omdbapi.com/)   
 
+## Contact         
+   - Email: [papireddyeppala903@gmail.com](mailto:papireddyeppala903@gmail.com)
 
 
 
