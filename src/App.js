@@ -9,6 +9,8 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Favorites from './components/Favorites';
 import UserProfile from './pages/UserProfile';
+import { SpeedInsights } from '@vercel/speed-insights/react';
+
 
 const App = () => {
   return (
@@ -16,6 +18,7 @@ const App = () => {
       <Router>
         <AppRoutes />
       </Router>
+      <SpeedInsights/>
     </SearchProvider>
   );
 };
