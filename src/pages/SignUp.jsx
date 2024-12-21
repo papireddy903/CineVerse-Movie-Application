@@ -34,10 +34,10 @@ const SignUp = () => {
                 const user = userCredential.user;
                 console.log('User created successfully:', user);
 
-                // return setDoc(doc(firestore, 'users', user.uid), {
-                //     email: user.email,
-                //     createdAt: serverTimestamp(),
-                // });
+                return setDoc(doc(firestore, 'users', user.uid), {
+                    email: user.email,
+                    createdAt: serverTimestamp(),
+                });
             })
             .then(() => {
                 setSuccessMessage('Registration successful! Redirecting to login...');
@@ -48,7 +48,7 @@ const SignUp = () => {
             })
             .catch((error) => {
                 console.error('Error during registration:', error.message);
-                setErrorMessage(`Error: ${error.message}`);
+                setErrorMessage("User registration failed. Please try again.");
                 setSuccessMessage('');
             });
     };

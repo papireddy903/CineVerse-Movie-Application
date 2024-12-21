@@ -19,7 +19,6 @@ const SignIn = () => {
             }
         });
 
-        // Clean up the listener when the component is unmounted
         return () => unsubscribe();
     }, [navigate]);
 
@@ -37,7 +36,7 @@ const SignIn = () => {
             console.log('Logged in successfully');
             navigate('/search'); // Redirect to home after successful login
         } catch (error) {
-            setErrorMessage(error.message);
+            setErrorMessage("Failed to login. Please check your credentials and try again.");
         }
     };
 
