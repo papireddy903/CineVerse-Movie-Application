@@ -30,7 +30,7 @@
 
 ## Introduction
 
-The **Movie App** is a web application that allows users to search for movies, view detailed information about them, and manage a list of their favorite movies. It leverages the OMDb API to fetch movie data and provides a user-friendly interface for exploring movies by title, year, and other details.
+The **Movie App** is a dynamic web application that allows users to easily search for movies, view detailed information, manage their list of favorites, and enjoy trailers all in one place. By integrating the OMDb API, it provides real-time data about movies, including their titles, release years, ratings, and much more. Users can add movies to their favorites, view in-depth details, and watch trailers directly within the app, offering a seamless and engaging movie exploration experience.
 
 ## Features
 
