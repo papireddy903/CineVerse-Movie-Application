@@ -19,6 +19,7 @@
 ![Login Page](image.png)
 ![Signup Page](image-1.png)
 ![Home Page](image-2.png)
+
 ![Movies Search](image-8.png)
 ![Movie Trailer](image-9.png)
 ![Movie Details](image-4.png)
