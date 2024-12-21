@@ -7,9 +7,14 @@ const SearchBar = () => {
     const { query, setQuery, year, setYear, movies, setMovies } = useSearch();
     const [isLoading, setIsLoading] = useState(false);
     const [searchInitiated, setSearchInitiated] = useState(false);
+    const [dropDownOpen, setDropDownOpen] = useState(false);
 
     const years = Array.from({ length: 2025 - 1900 }, (_, i) => 1900 + i);
     const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
+
+    const toggleDropDown = () => {
+        setDropDownOpen(!dropDownOpen);
+    }
 
     const handleSearch = async () => {
         if (!query) return;
@@ -23,7 +28,13 @@ const SearchBar = () => {
             const data = response.data;
 
             if (data.Response === "True") {
-                setMovies(data.Search);
+                const detailedMovies = await Promise.all(
+                    data.Search.map(async (movie) => {
+                        const detailResponse = await axios.get(`https://www.omdbapi.com/?i=${movie.imdbID}&apikey=${API_KEY}`);
+                        return detailResponse.data;
+                    })
+                );
+                setMovies(detailedMovies);
             } else {
                 setMovies([]);
             }
@@ -33,6 +44,67 @@ const SearchBar = () => {
             setIsLoading(false);
         }
     };
+
+    const HighToLow = () => {
+        const sortedMovies = [...movies].sort((a, b) => {
+            const boxOfficeA = a.BoxOffice && a.BoxOffice !== "N/A" && !isNaN(parseInt(a.BoxOffice.replace(/[^0-9]/g, '')))
+                ? parseInt(a.BoxOffice.replace(/[^0-9]/g, ''))
+                : 0;
+            const boxOfficeB = b.BoxOffice && b.BoxOffice !== "N/A" && !isNaN(parseInt(b.BoxOffice.replace(/[^0-9]/g, '')))
+                ? parseInt(b.BoxOffice.replace(/[^0-9]/g, ''))
+                : 0;
+            return boxOfficeB - boxOfficeA;
+        });
+        setMovies(sortedMovies);
+    };
+    
+    const LowToHigh = () => {
+        const sortedMovies = [...movies].sort((a, b) => {
+            const boxOfficeA = a.BoxOffice && a.BoxOffice !== "N/A" && !isNaN(parseInt(a.BoxOffice.replace(/[^0-9]/g, '')))
+                ? parseInt(a.BoxOffice.replace(/[^0-9]/g, ''))
+                : 0;
+            const boxOfficeB = b.BoxOffice && b.BoxOffice !== "N/A" && !isNaN(parseInt(b.BoxOffice.replace(/[^0-9]/g, '')))
+                ? parseInt(b.BoxOffice.replace(/[^0-9]/g, ''))
+                : 0;
+            return boxOfficeA - boxOfficeB;
+        });
+        setMovies(sortedMovies);
+    };
+    
+    const RatingHighToLow = () => {
+        const sortedMovies = [...movies].sort((a, b) => 
+            (b.imdbRating && b.imdbRating !== "N/A" ? parseFloat(b.imdbRating) : 0) -
+            (a.imdbRating && a.imdbRating !== "N/A" ? parseFloat(a.imdbRating) : 0)
+        );
+        setMovies(sortedMovies);
+    };
+    
+    const RatingLowToHigh = () => {
+        const sortedMovies = [...movies].sort((a, b) => 
+            (a.imdbRating && a.imdbRating !== "N/A" ? parseFloat(a.imdbRating) : 0) -
+            (b.imdbRating && b.imdbRating !== "N/A" ? parseFloat(b.imdbRating) : 0)
+        );
+        setMovies(sortedMovies);
+    };
+    
+    const NewToOld = () => {
+        const sortedMovies = [...movies].sort((a, b) => {
+            const yearA = a.Released && a.Released !== "N/A" ? parseInt(a.Released.split(' ').pop()) : 0;
+            const yearB = b.Released && b.Released !== "N/A" ? parseInt(b.Released.split(' ').pop()) : 0;
+            return yearB - yearA;
+        });
+        setMovies(sortedMovies);
+    };
+    
+    const OldToNew = () => {
+        const sortedMovies = [...movies].sort((a, b) => {
+            const yearA = a.Released && a.Released !== "N/A" ? parseInt(a.Released.split(' ').pop()) : 0;
+            const yearB = b.Released && b.Released !== "N/A" ? parseInt(b.Released.split(' ').pop()) : 0;
+            return yearA - yearB;
+        });
+        setMovies(sortedMovies);
+    };
+    
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-4">
@@ -65,6 +137,26 @@ const SearchBar = () => {
                 >
                     Search
                 </button>
+
+                {!isLoading && searchInitiated && (
+                    <div>
+                        <button className="text-white flex items-center gap-1 bg-purple-600 p-4 rounded-full hover:bg-purple-700 transition-allduration-300 shadow-lg" onClick={toggleDropDown}>
+                            <p>Filters</p> 
+                            <span className="down">&#9660;</span>
+                        </button>
+
+                        {dropDownOpen && (
+                            <div className="flex flex-col justify-start items-start absolute bg-gray-700 rounded-lg shadow-lg p-4 space-y-2 text-white">
+                            <button className="hover:bg-white hover:text-black" onClick={HighToLow}>Collections High to Low</button>
+                            <button className="hover:bg-white hover:text-black" onClick={LowToHigh}>Collections Low to High</button>
+                            <button className="hover:bg-white hover:text-black" onClick={RatingHighToLow}>Rating High to Low</button>
+                            <button className="hover:bg-white hover:text-black" onClick={RatingLowToHigh}>Rating Low to High</button>
+                            <button className="hover:bg-white hover:text-black" onClick={NewToOld}>New to Old</button>
+                            <button className="hover:bg-white hover:text-black" onClick={OldToNew}>Old to New</button>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
 
             {isLoading && (
@@ -72,11 +164,12 @@ const SearchBar = () => {
             )}
 
             {!isLoading && searchInitiated && movies.length > 0 && (
+                <div>
                 <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {movies.map((movie) => (
                         <div
-                            key={movie.imdbID}
-                            className="bg-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
+                        key={movie.imdbID}
+                        className="bg-gray-700 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
                         >
                             <Link to={`/movie/${movie.imdbID}`}>
                                 <img
@@ -94,6 +187,7 @@ const SearchBar = () => {
                             </div>
                         </div>
                     ))}
+                    </div>
                 </div>
             )}
 
