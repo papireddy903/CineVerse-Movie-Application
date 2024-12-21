@@ -19,7 +19,8 @@
 ![Login Page](image.png)
 ![Signup Page](image-1.png)
 ![Home Page](image-2.png)
-![Movies Search](image-3.png)
+![Movies Search](image-8.png)
+![Movie Trailer](image-9.png)
 ![Movie Details](image-4.png)
 ![Favorite Movies/Shows](image-5.png)
 ![Responsive](image-6.png)
@@ -35,6 +36,7 @@ The **Movie App** is a web application that allows users to search for movies, v
 
 - **Search for Movies by Title**: Easily search for movies by entering the title in the search bar.
 - **Narrow Down Search Results with Year**: Filter movie listings by year to refine your search results.
+- **Play Movie Trailers**: Watch trailers for movies directly from the app.
 - **View Detailed Movie Information**: Get comprehensive details about movies including box office collections, ratings, plot summaries, and more.
 - **Add/Remove Movies to/from Favorites**: Users can save their favorite movies to their list for easy access later.
 - **Responsive Design**: The app is designed to work seamlessly on both mobile and desktop devices for an optimal user experience.
@@ -42,7 +44,7 @@ The **Movie App** is a web application that allows users to search for movies, v
 ## Technologies Used
 
 - **Frontend**: React.js
-- **API**: OMDb API
+- **API**: OMDb API, Youtube API
 - **Libraries**:
   - Axios (for making API requests)
   - React Router (for routing)
@@ -58,7 +60,9 @@ Ensure the following are installed on your machine:
 
 - **Node.js** (includes npm) — [Install Node.js](https://nodejs.org/)
 - **Firebase account** — [Get started with Firebase](https://firebase.google.com/)
-- **API Key** from OMDb API — [Get OMDb API Key](https://www.omdbapi.com/apikey.aspx)
+- **OMDbAPI Key** from OMDb API — [Get OMDb API Key](https://www.omdbapi.com/apikey.aspx)
+- **Youtube API Key** from Youtube API — [Get Youtube API Key](https://console.cloud.google.com/apis/credentials?inv=1&invt=Abktdw)
+
 
 ### Steps to Run the Application Locally
 
@@ -101,7 +105,15 @@ Ensure the following are installed on your machine:
     ```
 - Ensure that the .env file is added to your .gitignore to prevent exposing sensitive information.
 
-6. **Run the Application**
+6. **Obtain Youtube API KEY**
+    - Obtain API KEY from [here](https://console.cloud.google.com/apis/credentials?inv=1&invt=Abktdw)
+    Once you have your key, add it to the .env file in the root of your project:
+    ```bash
+    REACT_APP_YOUTUBE_API_KEY="your-youtube-api-key"
+    ```
+- Ensure that the .env file is added to your .gitignore to prevent exposing sensitive information.
+
+7. **Run the Application**
     Start the app with 
     ```bash
     npm start
@@ -135,6 +147,7 @@ Contributions are welcome! If you have a feature or bug fix you'd like to contri
    - [Tailwind CSS](https://tailwindcss.com/)
    - [React Icons](https://react-icons.github.io/react-icons/)
    - [OMDb API](https://www.omdbapi.com/)   
+   - [Youtube API](https://developers.google.com/youtube/v3/getting-started)
 
 ## Contact         
    - Email: [papireddyeppala903@gmail.com](mailto:papireddyeppala903@gmail.com)
