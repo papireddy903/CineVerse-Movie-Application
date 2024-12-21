@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { SearchProvider } from "./components/SearchContext";
+import { SearchProvider } from './components/SearchContext';
 import Navbar from './components/Navbar';
 import SearchBar from './components/SearchBar';
 import MovieDetails from './components/MovieDetails';
@@ -11,14 +11,13 @@ import Favorites from './components/Favorites';
 import UserProfile from './pages/UserProfile';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
-
 const App = () => {
   return (
     <SearchProvider>
       <Router>
         <AppRoutes />
       </Router>
-      <SpeedInsights/>
+      {process.env.NODE_ENV === 'production' && <SpeedInsights />}
     </SearchProvider>
   );
 };
@@ -31,9 +30,8 @@ const AppRoutes = () => {
   const hideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   return (
-    <div className={!hideNavbar ? "pt-16" : ""}>
+    <div className={!hideNavbar ? 'pt-16' : ''}>
       {!hideNavbar && <Navbar />}
-
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
