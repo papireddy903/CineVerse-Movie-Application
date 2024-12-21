@@ -3,20 +3,20 @@ import { Link } from 'react-router-dom';
 import axios from "axios";
 import { useSearch } from "./SearchContext";
 
-
 const SearchBar = () => {
     const { query, setQuery, year, setYear, movies, setMovies } = useSearch();
     const [isLoading, setIsLoading] = useState(false);
+    const [searchInitiated, setSearchInitiated] = useState(false);
 
-    // Generate years for the dropdown dynamically (1900 - 2024)
     const years = Array.from({ length: 2025 - 1900 }, (_, i) => 1900 + i);
-    const API_KEY = process.env.REACT_APP_OMDB_API_KEY
-    console.log(API_KEY)
+    const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
+    console.log(API_KEY);
 
     const handleSearch = async () => {
         if (!query) return;
 
         setIsLoading(true);
+        setSearchInitiated(true);
 
         try {
             const yearParam = year && year !== "Year" ? `&y=${year}` : "";
@@ -48,22 +48,6 @@ const SearchBar = () => {
                         placeholder="Search for a Movie..."
                         className="w-full text-xl p-4 pl-10 text-white bg-gray-700 rounded-full outline-none focus:ring-2 focus:ring-purple-400 transition-all duration-300 shadow-lg placeholder-gray-400"
                     />
-                    {/* <div className="absolute right-4 top-4 text-gray-400">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={2}
-                            stroke="currentColor"
-                            className="w-6 h-6"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M21 21l-4.35-4.35M9.5 17a7.5 7.5 0 1 1 5.306-12.806A7.5 7.5 0 0 1 9.5 17z"
-                            />
-                        </svg>
-                    </div> */}
                 </div>
 
                 {/* Year Dropdown */}
@@ -93,7 +77,7 @@ const SearchBar = () => {
             )}
 
             {/* Movies Display */}
-            {movies.length > 0 && (
+            {!isLoading && searchInitiated && movies.length > 0 && (
                 <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {movies.map((movie) => (
                         <div
@@ -117,6 +101,11 @@ const SearchBar = () => {
                         </div>
                     ))}
                 </div>
+            )}
+
+            {/* Error Display */}
+            {!isLoading && searchInitiated && movies.length === 0 && (
+                <div className="mt-8 text-white text-xl">No movies found.</div>
             )}
         </div>
     );

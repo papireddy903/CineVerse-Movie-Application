@@ -3,18 +3,23 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { CiHeart } from "react-icons/ci";
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
-
+import { getAuth } from "firebase/auth";
+import { collection, getDoc, doc, setDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { db } from '../firebase'; // Adjust the path according to your setup
 
 const MovieDetails = () => {
     const { id } = useParams();
     const [movie, setMovie] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isFavorite, setIsFavorite] = useState(false);
 
+    const auth = getAuth();
+    const api_key = process.env.REACT_APP_OMDB_API_KEY
     useEffect(() => {
         const fetchMovieDetails = async () => {
             try {
-                const response = await axios.get(`https://www.omdbapi.com/?i=${id}&apikey=a89f1437`);
+                const response = await axios.get(`https://www.omdbapi.com/?i=${id}&apikey=${api_key}`);
                 if (response.data.Response === 'True') {
                     setMovie(response.data);
                 } else {
@@ -30,12 +35,71 @@ const MovieDetails = () => {
         fetchMovieDetails();
     }, [id]);
 
+    // Check if the movie is already in the user's favorites
+    const checkIfFavorite = async () => {
+        if (auth.currentUser) {
+            const userRef = doc(db, 'users', auth.currentUser.uid);
+            const docSnap = await getDoc(userRef);
+
+            if (docSnap.exists()) {
+                const userData = docSnap.data();
+                if (userData.favorites && userData.favorites.includes(id)) {
+                    setIsFavorite(true);
+                    console.log('Movie is already in favorites');
+                } else {
+                    setIsFavorite(false);
+                }
+            }
+        }
+    };
+
+    // Add or remove the movie from the user's favorites
+    const handleToggleFavorite = async () => {
+        if (auth.currentUser) {
+            const userRef = doc(db, 'users', auth.currentUser.uid);
+            const userDoc = await getDoc(userRef);
+
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                if (isFavorite) {
+                    // Remove from favorites
+                    await updateDoc(userRef, {
+                        favorites: arrayRemove(movie.imdbID)
+                    });
+                    console.log('Removed from favorites');
+                } else {
+                    // Add to favorites
+                    await updateDoc(userRef, {
+                        favorites: arrayUnion(movie.imdbID)
+                    });
+                    console.log('Added to favorites');
+                }
+
+                setIsFavorite(!isFavorite); // Toggle the favorite state
+                console.log('Updated isFavorite:', !isFavorite); // Log the updated state
+            } else {
+                // If the user doesn't exist in the database, create a new record
+                await setDoc(userRef, {
+                    email: auth.currentUser.email,
+                    favorites: [movie.imdbID]
+                });
+
+                setIsFavorite(true); // Set as favorite after adding it
+                console.log('Set isFavorite to true');
+            }
+        }
+    };
+
+    useEffect(() => {
+        checkIfFavorite();
+    }, [id]);
+
     if (isLoading) return <div className="text-center text-white mt-8">Loading...</div>;
     if (error) return <div className="text-center text-red-500 mt-8">{error}</div>;
 
-    const rating = isNaN(parseFloat(movie.imdbRating))?0:parseFloat(movie.imdbRating);
+    const rating = isNaN(parseFloat(movie.imdbRating)) ? 0 : parseFloat(movie.imdbRating);
     const fullStars = Math.round(rating);
-    const emptyStars = 10 - fullStars; 
+    const emptyStars = 10 - fullStars;
 
     return (
         <div className="bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900 min-h-screen py-10">
@@ -68,23 +132,25 @@ const MovieDetails = () => {
                                 <p className="text-xl font-bold text-yellow-300">
                                     <strong>IMDB Rating:</strong> {movie.imdbRating}
                                 </p>
-                                
                             </div>
                             <div className="flex items-center">
-                                    {[...Array(fullStars)].map((_, index) => (
-                                        <AiFillStar key={`star-${index}`} className="text-yellow-300" />
-                                    ))}
-                                    {[...Array(emptyStars)].map((_, index) => (
-                                        <AiOutlineStar key={`empty-star-${index}`} className="text-gray-400" />
-                                    ))}
-                                </div>
+                                {[...Array(fullStars)].map((_, index) => (
+                                    <AiFillStar key={`star-${index}`} className="text-yellow-300" />
+                                ))}
+                                {[...Array(emptyStars)].map((_, index) => (
+                                    <AiOutlineStar key={`empty-star-${index}`} className="text-gray-400" />
+                                ))}
+                            </div>
 
                         </div>
-                <div className='flex justify-center mx-2 my-2'>
-                    <div className='cursor-pointer text-3xl text-red-500 hover:text-red-700 transition-all duration-300'>
-                        <CiHeart />
-                    </div>
-                </div>
+                        <div className='flex justify-center mx-2 my-2'>
+                            <div
+                                onClick={handleToggleFavorite}
+                                className={`cursor-pointer text-3xl ${isFavorite ? 'text-red-700' : 'text-white'} hover:text-red-700 transition-all duration-100`}
+                            >
+                                <CiHeart />
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>
