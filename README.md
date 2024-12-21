@@ -35,11 +35,19 @@ The **CineVerse** is a dynamic web application that allows users to easily searc
 ## Features
 
 - **Search for Movies by Title**: Easily search for movies by entering the title in the search bar.
-- **Narrow Down Search Results with Year**: Filter movie listings by year to refine your search results.
 - **Play Movie Trailers**: Watch trailers for movies directly from the app.
 - **View Detailed Movie Information**: Get comprehensive details about movies including box office collections, ratings, plot summaries, and more.
 - **Add/Remove Movies to/from Favorites**: Users can save their favorite movies to their list for easy access later.
 - **Responsive Design**: The app is designed to work seamlessly on both mobile and desktop devices for an optimal user experience.
+- **Sort Movies by Box Office Collections**:
+   High to Low: Sort movies based on their box office collections in descending order.
+   Low to High: Sort movies based on their box office collections in ascending order.
+- **Sort Movies by IMDb Ratings**:
+   High to Low: Sort movies based on IMDb ratings in descending order.
+   Low to High: Sort movies based on IMDb ratings in ascending order.
+- **Sort Movies by Release Year**:
+   New to Old: Sort movies from the latest to the oldest release year.
+   Old to New: Sort movies from the oldest to the latest release year.
 
 ## Technologies Used
 
