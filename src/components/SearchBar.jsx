@@ -107,7 +107,9 @@ const SearchBar = () => {
     
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-4">
+        <div className="flex flex-col items-center justify-center p-4">
+            <h1 className="text-gray-300 font-bold mt-5 text-6xl mb-4 text-center">Welcome to CineVerse</h1>
+            <p className="text-gray-500 mb-[50px]">Your one-stop platform for exploring movies, managing favorites, and watching trailers effortlessly.</p>
             <div className="flex items-center w-full max-w-2xl space-x-4">
                 <div className="relative flex-1">
                     <input
