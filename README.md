@@ -157,6 +157,8 @@ Contributions are welcome! If you have a feature or bug fix you'd like to contri
    - [React Icons](https://react-icons.github.io/react-icons/)
    - [OMDb API](https://www.omdbapi.com/)   
    - [Youtube API](https://developers.google.com/youtube/v3/getting-started)
+## Demo Video
+- [video](https://www.youtube.com/watch?v=FZl3XAN_BW0)
 
 ## Contact         
    - Email: [papireddyeppala903@gmail.com](mailto:papireddyeppala903@gmail.com)
